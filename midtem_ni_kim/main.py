@@ -16,12 +16,13 @@ def display_menu():
             5. Exit
                                         """)
 
-    choice = int(input("What do you want to do? "))
-
 
 def add_pet(pet_list):
     # ask for name, animal type, status — build the string, add to the list
-    pass
+    put = input("What pet do u want to add? ")
+    pets.append(put)
+
+    print ("Successfully added.")
 
 def view_pets(pet_list):
     # loop through and print every pet — handle empty list
@@ -43,27 +44,30 @@ def remove_pet(pet_list):
 def main():
     running = True
     while running:
-
-        choice = display_menu()
-
-    try:
-        
-        if choice == 1:
-                add_pet()
-        elif choice == 2:
-            view_pets()
-        elif choice == 3:
-            count_available_adopted()
-        elif choice == 4:
-            find_pet()
-        elif choice == 5:
-            running = False
-        else: 
-            print ("Just pick only on 1-5!!! ")
-            
-    except:
-        print ("Enter a valid number.")
             # use if/elif to call the right function based on choice
             # set running = False when the user picks Exit
+        display_menu()
+
+        
+
+        try:
+
+            choice = int(input("What do you want to do? "))
+            
+            if choice == 1:
+                add_pet(pets)
+            elif choice == 2:
+                view_pets(view_pets)
+            elif choice == 3:
+                count_available_adopted
+            elif choice == 4:
+                find_pet
+            elif choice == 5:
+                running = False
+            else: 
+                print ("Just pick only on 1-5!!! ")
+
+        except ValueError:
+            print ("Enter a valid number... ")
 
 main()
