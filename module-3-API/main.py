@@ -1,28 +1,67 @@
 import requests
 import random
 
-def get_response():
-    response = requests.get(
-       'https://pokeapi.co/api/v1/pokemon?limit=5',
-    )
-    return response.json()
+pokemon_list = ["pikachu", "charizard", "jigglypuff", "snorlax", "bulbasaur"]
 
-print ("==========WHO'S THAT POKEMON?==========")
+def get_pokemon_data(pokemon_name):
+    base_url = "https://pokeapi.co/api/v2/pokemon/" + pokemon_name
 
-print (" ")
+    response = requests.get(base_url)
 
-pokemons_attribute = [
-    "bulbasaur",
-    "ivysaur",
-    "venusaur",
-    "charmander",
-    "charmeleon",
-]
+    if response.status_code == 200:
+        data = response.json()
 
-print (random.choice(pokemons_attribute))
-ask = input ("Type 'yes' to  process and 'no' to exit: ")
+        name = data["name"]
+        height = data["height"]
+        weight = data["weight"]
 
-if ask == "yes":
-    get_response()
-elif ask == "no":
-    print ("bye")
+        return name, height, weight
+
+    else:
+        print("Pokemon data not found.")
+        return None
+
+def play_game():
+    print("==============================")
+    print("   POKEMON GUESSING GAME")
+    print("==============================")
+
+    pokemon_name = random.choice(pokemon_list)
+
+    result = get_pokemon_data(pokemon_name)
+
+    if result is None:
+        print("Unable to start the game.")
+        return
+
+    name, height, weight = result
+
+    print("\nGuess the Pokemon!")
+    print("Height:", height, "decimeters")
+    print("Weight:", weight, "hectograms")
+
+    print(" ")
+
+    print("You have 3 attempts.")
+
+    won = False
+
+    for attempt in range(1, 4):
+        guess = input("\nEnter Pokemon name: ").strip().lower()
+
+        if guess == name:
+            print("Correct! You guessed the Pokemon!")
+            won = True
+            break
+
+        else:
+            print("Wrong guess!")
+
+    if won == False:
+        print("\nYou ran out of attempts!")
+        print("The correct Pokemon was:", name)
+
+    print("\nThanks for playing!")
+
+
+play_game()
